@@ -10,13 +10,19 @@ $mandatory_fields = array(
 	'tid' => $tid_values
 	);
 
-foreach($mandatory_fields as $field => $value){
-
-	if ((!array_key_exists($field, $_GET)) OR
-		(!in_array($_GET[$field], $value))){
-		header('HTTP/1.0 400 Bad Request');
-		echo "Error 400 Bad Request : field t missing\n";
-		exit;
+function check_parameters($mandatory, $given){
+	foreach ($mandatory as $field => $value){
+		if ((!array_key_exists($field, $given)) OR
+			(!in_array($given[$field], $value))){
+			return False;
+		}
 	}
+	return True;
 }
 
+$syntax_ok = check_parameters($mandatory_fields, $_GET);
+if (!$syntax_ok){
+	header('HTTP/1.0 400 Bad Request');
+	echo "Error 400 Bad Request : field t missing\n";
+	exit;
+}
