@@ -1,14 +1,17 @@
 <?php
 
-if (!array_key_exists("t", $_GET)){
-	header('HTTP/1.0 400 Bad Request');
-	echo "Error 400 Bad Request : field t missing\n";
-	exit;
-}else{
+$mandatory_fields = array(
+	't' => 'pageview',
+	'v' => 1,
+	'tid' => 'UA-XXXX-Y'
+	);
 
-	foreach($_GET as $key => $item)
-	{
-		echo $key." : ".$item."<br />\n";
+foreach($mandatory_fields as $field => $value){
+
+	if (!array_key_exists($field, $_GET)){
+		header('HTTP/1.0 400 Bad Request');
+		echo "Error 400 Bad Request : field t missing\n";
+		exit;
 	}
 }
 
