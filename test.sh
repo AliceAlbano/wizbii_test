@@ -15,9 +15,9 @@ test_collect() {
 
 	if [ $RT -ne $RETURN_EXPECTED ]
 	then
-		echo "Test KO - $NAME (RT=$RT, EXPECTING $RETURN_EXPECTED)"
+		echo -e '\e[31m'"TEST KO\e[0m" - $NAME "(RT=$RT, EXPECTING $RETURN_EXPECTED)"
 	else
-		echo "Test OK - $NAME"
+		echo -e '\e[32m'"TEST OK\e[0m" - $NAME
 	fi
 }
 
