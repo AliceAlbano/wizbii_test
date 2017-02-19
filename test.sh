@@ -31,3 +31,7 @@ test_collect 'Invalid value for t' $RT_22 't=test&v=1&tid=UA-XXXX-Y'
 test_collect 'Invalid value for v' $RT_22 't=pageview&v=3&tid=UA-XXXX-Y'
 test_collect 'Invalid value for tid' $RT_22 't=pageview&v=1&tid=3'
 test_collect 'Invalid value for ds' $RT_22 't=pageview&v=1&tid=UA-XXXX-Y&ds=8'
+
+test_collect 'Missing conditional field' $RT_22 't=screenview&v=1&tid=UA-XXXX-Y&ds=apps'
+test_collect 'Missing conditional field' $RT_22 't=event&v=1&tid=UA-XXXX-Y&ds=apps&ec=bco&ea=client'
+test_collect 'Conditional field added' $RT_OK 't=screenview&v=1&tid=UA-XXXX-Y&ds=apps&sn=jobs'
