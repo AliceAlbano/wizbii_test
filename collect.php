@@ -3,7 +3,8 @@
 $mandatory_fields = array(
 	't' => array('pageview', 'screenview', 'event'),
 	'v' => array(1),
-	'tid' => array('UA-XXXX-Y')
+	'tid' => array('UA-XXXX-Y'),
+	'ds' => array('web', 'apps', 'backend'),
 	);
 
 function check_parameters($mandatory, $given) {
