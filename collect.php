@@ -1,13 +1,9 @@
 <?php
 
-$t_values = array('pageview', 'screenview', 'event');
-$v_values = array(1);
-$tid_values = array('UA-XXXX-Y');
-
 $mandatory_fields = array(
-	't' => $t_values,
-	'v' => $v_values,
-	'tid' => $tid_values
+	't' => array('pageview', 'screenview', 'event'),
+	'v' => array(1),
+	'tid' => array('UA-XXXX-Y')
 	);
 
 function check_parameters($mandatory, $given){
