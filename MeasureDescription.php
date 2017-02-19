@@ -2,6 +2,8 @@
 
 class MeasureDescription
 {
+	//XXX: How can we know if it is a mobile hit ?
+	//We don't implement these paramaters for now.
 	private $_mandatory = array('t', 'v', 'tid', 'ds');
 	private $_existing = array('t', 'v', 'tid', 'ds', 'ec', 'ea', 'sn');
 	private $_format = array(
@@ -42,8 +44,9 @@ class MeasureDescription
 
 	public function existing_parameters($given){
 		foreach ($given as $field => $value) {
-			if (!array_key_exists($field, this->_existing))
+			if (!in_array($field, $this->_existing)) {
 				return False;
+			}
 		}
 		return True;
 	}
@@ -57,11 +60,11 @@ class MeasureDescription
 			//Conditional paramaters according to t value (hit type)
 			if ($field == 't') {
 				if ($value == 'event') {
-					add_mandatory_parameter('ec');
-					add_mandatory_parameter('ea');
+					$this->add_mandatory_parameter('ec');
+					$this->add_mandatory_parameter('ea');
 				}
 				if ($value == 'screenview')
-					add_mandatory_parameter('sn');
+					$this->add_mandatory_parameter('sn');
 			}
 		}
 		return True;
