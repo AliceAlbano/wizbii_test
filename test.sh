@@ -1,14 +1,15 @@
 #!/bin/bash
 
+#Return values for curl
 RT_OK=0
 RT_22=22
 
 test_collect() {
 	NAME=$1
 	RETURN_EXPECTED=$2
-	T=$3
+	PARAMS=$3
 
-	curl -s -f -X GET 'http://127.0.0.1:8000/collect.php?'$T'dl=http://www.wizbii.com/bar&ec=ads&el=client&ea=Click%20Masthead&ds=web&cn=bpce&cs=wizbii&cm=web&ck=erasmus&cc=foobar' > /dev/null
+	curl -s -f -X GET 'http://127.0.0.1:8000/collect.php?'$PARAMS > /dev/null
 
 	RT=$?
 
@@ -20,5 +21,7 @@ test_collect() {
 	fi
 }
 
-test_collect 'Field t valid' $RT_OK 't=pageview&'
-test_collect 'Field t missing' $RT_22 ''
+test_collect 'All mandatory fields present' $RT_OK 't=pageview&v=1&tid=UA-XXXX-Y'
+test_collect 'Field t missing' $RT_22 'v=1&tid=UA-XXXX-Y'
+test_collect 'Field v missing' $RT_22 't=pageview&tid=UA-XXXX-Y'
+test_collect 'Field tid missing' $RT_22 't=pageview&v=1&'
