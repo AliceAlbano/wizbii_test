@@ -42,8 +42,9 @@ function check_parameters_syntax($reference, $given, &$mandatory) {
 
 function check_mandatory_parameters_presence($mandatory, $given) {
 	foreach ($mandatory as $field) {
-		if (!array_key_exists($field, $given))
+		if (!array_key_exists($field, $given)) {
 			return False;
+		}
 	}
 	return True;
 }
@@ -52,7 +53,7 @@ $existence_ok = check_parameters_existence($field_values, $_GET);
 $syntax_ok = check_parameters_syntax($field_values, $_GET, $mandatory_fields);
 $mandatory_ok = check_mandatory_parameters_presence($mandatory_fields, $_GET);
 
-if (!$existence_ok OR !$mandatory_ok or !$syntax_ok) {
+if (!$existence_ok OR !$mandatory_ok OR !$syntax_ok) {
 	header('HTTP/1.0 400 Bad Request');
 	echo "Error 400 Bad Request\n";
 	exit;
