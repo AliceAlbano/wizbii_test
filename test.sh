@@ -23,7 +23,7 @@ test_collect() {
 
 # Test non-conditionnal mandatory fields 
 
-test_collect 'All mandatory fields present' $RT_OK 't=pageview&v=1&tid=UA-XXXX-Y&ds=apps'
+test_collect 'All mandatory fields present' $RT_OK 't=pageview&v=1&tid=UA-XXXX-Y&ds=apps&qt=3000'
 test_collect 'Field t missing' $RT_22 'v=1&tid=UA-XXXX-Y&ds=apps'
 test_collect 'Field v missing' $RT_22 't=pageview&tid=UA-XXXX-Y&ds=apps'
 test_collect 'Field tid missing' $RT_22 't=pageview&v=1&ds=apps'
@@ -35,6 +35,7 @@ test_collect 'Invalid value for t' $RT_22 't=test&v=1&tid=UA-XXXX-Y'
 test_collect 'Invalid value for v' $RT_22 't=pageview&v=3&tid=UA-XXXX-Y'
 test_collect 'Invalid value for tid' $RT_22 't=pageview&v=1&tid=3'
 test_collect 'Invalid value for ds' $RT_22 't=pageview&v=1&tid=UA-XXXX-Y&ds=8'
+test_collect 'Invalid value for qt' $RT_22 't=pageview&v=1&tid=UA-XXXX-Y&ds=8&qt=a'
 
 # Test with conditionnals mandatory fields
 
