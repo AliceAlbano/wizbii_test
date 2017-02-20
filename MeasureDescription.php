@@ -1,7 +1,5 @@
 <?php
 
-require 'Parameters.php';
-
 class MeasureDescription
 {
 	//XXX: How can we know if it is a mobile hit ?
