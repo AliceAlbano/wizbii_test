@@ -5,7 +5,7 @@ class MeasureDescription
 	//XXX: How can we know if it is a mobile hit ?
 	//We don't implement these paramaters for now.
 	private $_mandatory = array('t', 'v', 'tid', 'ds');
-	private $_existing = array('t', 'v', 'tid', 'ds', 'ec', 'ea', 'sn');
+	private $_existing = array('t', 'v', 'tid', 'ds', 'ec', 'ea', 'sn', 'qt');
 
 	private $_format = array(
 		't' => "#^pageview$|^screenview$|^event$#",
@@ -15,7 +15,14 @@ class MeasureDescription
 		'ec' => "#[\s\S]#",
 		'ea' => "#[\s\S]#",
 		'sn' => "#[\s\S]#",
+		'qt' => "#[0-9]+#"
 		);
+
+	private $_qt_max = 3600;
+
+	public function set_qt_max($value) {
+		$this->_qt_max = $value;
+	}
 
 	private function add_mandatory_parameter($parameter) {
 		array_push($this->_mandatory, $parameter);
@@ -58,6 +65,13 @@ class MeasureDescription
 				}
 				if ($value == 'screenview')
 					$this->add_mandatory_parameter('sn');
+			}
+
+			if ($field == 'qt') {
+				if ($value > $this->_qt_max) {
+					echo "qt is too high </br>\n";
+					return False;
+				}
 			}
 		}
 		return True;
