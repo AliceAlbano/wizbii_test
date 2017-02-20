@@ -1,8 +1,13 @@
 <?php
 
-require 'MeasureChecker.php';
+require 'StockRequest.php';
 
 $measure = new MeasureDescription;
-$measureChecker = new MeasureChecker;
+$validMeasure = new MeasureChecker;
 
-$measureChecker->valid_description($measure);
+$validMeasure->valid_description($measure);
+if ($validMeasure) {
+	echo "On va inserer la requete";
+	$stockrequest = new StockRequest($_GET);
+	$stockrequest->insertRequest();
+}
