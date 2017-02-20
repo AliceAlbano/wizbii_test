@@ -5,18 +5,24 @@ require 'MeasureDescription.php';
 class MeasureChecker
 {
 
+	private $_collected;
+
+	public function __construct($collected) {
+		$this->_collected = $collected;
+	}
+
 	public function valid_description($measure) {
-		$existence_ok = $measure->existing_parameters($_GET);
+		$existence_ok = $measure->existing_parameters($this->_collected);
 		if (!$existence_ok) {
 			$this->existing_problem();
 			exit;
 		}
-		$syntax_ok = $measure->valid_parameters($_GET);
+		$syntax_ok = $measure->valid_parameters($this->_collected);
 		if (!$syntax_ok) {
 			$this->valid_problem();
 			exit;
 		}
-		$mandatory_ok = $measure->mandatory_parameters($_GET);
+		$mandatory_ok = $measure->mandatory_parameters($this->_collected);
 		if (!$mandatory_ok) {
 			$this->mandatory_problem();
 			exit;
