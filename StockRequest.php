@@ -10,7 +10,7 @@ class StockRequest
 		$this->_measure = $measure;
 	}
 
-	public function insertRequest() {
+	public function insert_request() {
 		$m = new MongoClient();
 
 		$db = $m->analytics;

@@ -13,11 +13,11 @@ if (empty($data))
 $description = new MeasureDescription;
 $description->set_qt_max(3600);
 
-$validMeasure = new MeasureChecker($description);
-$validMeasure->valid_description($data);
+$valid_measure = new MeasureChecker($description);
+$valid_measure->valid_description($data);
 
 //Record measure if valid
-if ($validMeasure) {
-	$stockrequest = new StockRequest($data);
-	$stockrequest->insertRequest();
+if ($valid_measure) {
+	$stock_request = new StockRequest($data);
+	$stock_request->insert_request();
 }

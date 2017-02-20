@@ -31,9 +31,9 @@ class MeasureDescription
 		array_push($this->_mandatory, $parameter);
 	}
 
-	public function check_mandatory_parameters($given) {
+	public function check_mandatory_parameters($measure) {
 		foreach ($this->_mandatory as $field) {
-			if (!array_key_exists($field, $given)) {
+			if (!array_key_exists($field, $measure)) {
 				echo "$field presence is required. </br>\n";
 				return False;
 			}
@@ -41,8 +41,8 @@ class MeasureDescription
 		return True;
 	}
 
-	public function check_existing_parameters($given) {
-		foreach ($given as $field => $value) {
+	public function check_existing_parameters($measure) {
+		foreach ($measure as $field => $value) {
 			if (!in_array($field, $this->_existing)) {
 				echo "$field does not exist. </br>\n";
 				return False;
@@ -51,8 +51,8 @@ class MeasureDescription
 		return True;
 	}
 
-	public function check_valid_parameters($given) {
-		foreach ($given as $field => $value) {
+	public function check_valid_parameters($measure) {
+		foreach ($measure as $field => $value) {
 			$regexp = ($this->_format[$field]);
 
 			if (preg_match($regexp, $value) == 0) {
