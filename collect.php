@@ -4,14 +4,18 @@ require 'StockRequest.php';
 
 $measure = new MeasureDescription;
 
-if (!empty($_POST)) {
-	$validMeasure = new MeasureChecker($_POST);
-	} else
-	$validMeasure = new MeasureChecker($_GET);
+	$data = file_get_contents('php://input');
+	$data = json_decode($data, true)[0];
+
+if (!empty($data)) {
+	$validMeasure = new MeasureChecker($data);
+	} else {
+	$data = $_GET;
+	$validMeasure = new MeasureChecker($data);
 	}
 
 $validMeasure->valid_description($measure);
 if ($validMeasure) {
-	$stockrequest = new StockRequest($_GET);
+	$stockrequest = new StockRequest($data);
 	$stockrequest->insertRequest();
 }
