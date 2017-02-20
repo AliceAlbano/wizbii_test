@@ -5,7 +5,7 @@ class MeasureDescription
 	//XXX: How can we know if it is a mobile hit ?
 	//We don't implement these paramaters for now.
 	private $_mandatory = array('t', 'v', 'tid', 'ds');
-	private $_existing = array('t', 'v', 'tid', 'ds', 'ec', 'ea', 'sn', 'qt');
+	private $_existing = array('t', 'v', 'tid', 'ds', 'ec', 'ea', 'sn', 'qt', 'wui');
 
 	private $_format = array(
 		't' => "#^pageview$|^screenview$|^event$#",
@@ -15,7 +15,8 @@ class MeasureDescription
 		'ec' => "#[\s\S]#",
 		'ea' => "#[\s\S]#",
 		'sn' => "#[\s\S]#",
-		'qt' => "#[0-9]+#"
+		'qt' => "#[0-9]+#",
+		'wui' => "#[a-zA-Z0-9]+#"
 		);
 
 	private $_qt_max = 3600;
@@ -26,16 +27,6 @@ class MeasureDescription
 
 	private function add_mandatory_parameter($parameter) {
 		array_push($this->_mandatory, $parameter);
-	}
-
-//Change mandatory parameters according to t value
-	private function conditional_hit_type($value) {
-		if ($value == 'event') {
-			$this->add_mandatory_parameter('ec');
-			$this->add_mandatory_parameter('ea');
-		}
-		if ($value == 'screenview')
-			$this->add_mandatory_parameter('sn');
 	}
 
 	public function mandatory_parameters($given){
@@ -67,18 +58,31 @@ class MeasureDescription
 				return False;
 			}
 
-			if ($field == 't')
-				$this->conditional_hit_type($value);
+			$test = $this->conditional_hit_type($field, $value);
+			if (!$test)
+				return False;
+		}
+		return True;
+	}
 
-			if ($field == 'qt') {
-				if ($value > $this->_qt_max) {
-					echo "qt is too high </br>\n";
-					return False;
-				}
+//Handles condition on specific parameters
+	private function conditional_hit_type($field, $value) {
+		if ($field == 't') {
+			if ($value == 'event') {
+				$this->add_mandatory_parameter('ec');
+				$this->add_mandatory_parameter('ea');
+			}
+			if ($value == 'screenview')
+				$this->add_mandatory_parameter('sn');
+			return True;
+		}
+		if ($field == 'qt') {
+			if ($value > $this->_qt_max) {
+				echo "qt is too high </br>\n";
+				return False;
 			}
 		}
 		return True;
-
 	}
 
 }
