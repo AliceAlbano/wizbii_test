@@ -1,5 +1,5 @@
 all:
 
 test:
-	./test.sh
+	./test_get.sh
 	./test_post.sh
