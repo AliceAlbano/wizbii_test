@@ -23,7 +23,7 @@ test_collect() {
 
 # Test non-conditionnal mandatory fields 
 
-test_collect 'All mandatory fields present' $RT_OK 't=pageview&v=1&tid=UA-XXXX-Y&ds=apps&qt=3000'
+test_collect 'All mandatory fields present' $RT_OK 't=pageview&v=1&tid=UA-XXXX-Y&ds=apps&qt=3000&wui=alice'
 test_collect 'Field t missing' $RT_22 'v=1&tid=UA-XXXX-Y&ds=apps'
 test_collect 'Field v missing' $RT_22 't=pageview&tid=UA-XXXX-Y&ds=apps'
 test_collect 'Field tid missing' $RT_22 't=pageview&v=1&ds=apps'
@@ -36,11 +36,12 @@ test_collect 'Invalid value for v' $RT_22 't=pageview&v=3&tid=UA-XXXX-Y'
 test_collect 'Invalid value for tid' $RT_22 't=pageview&v=1&tid=3'
 test_collect 'Invalid value for ds' $RT_22 't=pageview&v=1&tid=UA-XXXX-Y&ds=8'
 test_collect 'Invalid value for qt' $RT_22 't=pageview&v=1&tid=UA-XXXX-Y&ds=8&qt=a'
+test_collect 'Invalid value for wui' $RT_22 't=pageview&v=1&tid=UA-XXXX-Y&ds=8&qt=3000&name=totototto'
 
 # Test with conditionnals mandatory fields
 
 test_collect 'Conditional field missing t=screenview -> ec & ea' $RT_22 't=screenview&v=1&tid=UA-XXXX-Y&ds=apps'
-test_collect 'Conditional field added t -> ec & ea' $RT_OK 't=screenview&v=1&tid=UA-XXXX-Y&ds=apps&sn=jobs'
+test_collect 'Conditional field added t -> ec & ea' $RT_OK 't=screenview&v=1&tid=UA-XXXX-Y&ds=apps&sn=jobs&wui=r2d2'
 
 test_collect 'Conditional field missing t=event -> sn' $RT_22 't=event&v=1&tid=UA-XXXX-Y&ds=apps'
 test_collect 'Conditional field added t=event -> sn' $RT_OK 't=event&v=1&tid=UA-XXXX-Y&ds=apps&ec=bdo&ea=client'
