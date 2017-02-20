@@ -35,6 +35,7 @@ class MeasureDescription
 	public function mandatory_parameters($given){
 		foreach ($this->_mandatory as $field) {
 			if (!array_key_exists($field, $given)) {
+				echo "$field presence is required. </br>\n";
 				return False;
 			}
 		}
@@ -45,6 +46,7 @@ class MeasureDescription
 	public function existing_parameters($given){
 		foreach ($given as $field => $value) {
 			if (!in_array($field, $this->_existing)) {
+				echo "$field does not exist. </br>\n";
 				return False;
 			}
 		}
@@ -54,6 +56,7 @@ class MeasureDescription
 	public function valid_parameters($given){
 		foreach ($given as $field => $value) {
 			if (!in_array($value, $this->_format[$field])) {
+				echo "$value is not a valid format for $field. </br>\n";
 				return False;
 			}
 
