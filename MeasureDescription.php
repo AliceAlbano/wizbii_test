@@ -10,13 +10,13 @@ class MeasureDescription
 	private $_existing = array('t', 'v', 'tid', 'ds', 'ec', 'ea', 'sn');
 
 	private $_format = array(
-		't' => array('pageview', 'screenview', 'event'),
-		'v' => array(1),
-		'tid' => array('UA-XXXX-Y'),
-		'ds' => array('web', 'apps', 'backend'),
-		'ec' => array('bdo'),
-		'ea' => array('client'),
-		'sn' => array('jobs'),
+		't' => "#^pageview$|^screenview$|^event$#",
+		'v' => "#^1$#",
+		'tid' => "#^UA-XXXX-Y$#",
+		'ds' => "#^apps$|^web$|^backend$#",
+		'ec' => "#[\s\S]#",
+		'ea' => "#[\s\S]#",
+		'sn' => "#[\s\S]#",
 		);
 
 	private function add_mandatory_parameter($parameter) {
@@ -46,8 +46,8 @@ class MeasureDescription
 
 	public function valid_parameters($given){
 		foreach ($given as $field => $value) {
-#			if (!$this->_format[$field]->check($value)) {
-			if (!in_array($value, $this->_format[$field])) {
+			$regexp = ($this->_format[$field]);
+			if (preg_match($regexp, $value) == 0) {
 				echo "$value is not a valid format for $field. </br>\n";
 				return False;
 			}
