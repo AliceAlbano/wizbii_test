@@ -3,7 +3,12 @@
 require 'StockRequest.php';
 
 $measure = new MeasureDescription;
-$validMeasure = new MeasureChecker($_GET);
+
+if (!empty($_POST)) {
+	$validMeasure = new MeasureChecker($_POST);
+	} else
+	$validMeasure = new MeasureChecker($_GET);
+	}
 
 $validMeasure->valid_description($measure);
 if ($validMeasure) {
