@@ -31,9 +31,7 @@ class MeasureDescription
 		array_push($this->_mandatory, $parameter);
 	}
 
-	// XXX : As this method return a boolean, we should rename it
-	//       check_mandatory_parameters
-	public function mandatory_parameters($given) {
+	public function check_mandatory_parameters($given) {
 		foreach ($this->_mandatory as $field) {
 			if (!array_key_exists($field, $given)) {
 				echo "$field presence is required. </br>\n";
@@ -43,7 +41,7 @@ class MeasureDescription
 		return True;
 	}
 
-	public function existing_parameters($given) {
+	public function check_existing_parameters($given) {
 		foreach ($given as $field => $value) {
 			if (!in_array($field, $this->_existing)) {
 				echo "$field does not exist. </br>\n";
@@ -53,7 +51,7 @@ class MeasureDescription
 		return True;
 	}
 
-	public function valid_parameters($given) {
+	public function check_valid_parameters($given) {
 		foreach ($given as $field => $value) {
 			$regexp = ($this->_format[$field]);
 
@@ -70,35 +68,35 @@ class MeasureDescription
 	}
 
 //Handles condition on specific parameters
-// XXX : Maybe a switch case would express better that we're testing some field
-//       specific values
 	private function conditional_hit_type($field, $value) {
 
-		if ($field == 't') {
-			if ($value == 'event') {
-				$this->add_mandatory_parameter('ec');
-				$this->add_mandatory_parameter('ea');
-			}
-			if ($value == 'screenview')
-				$this->add_mandatory_parameter('sn');
-		}
+		switch ($field) {
 
-		if ($field == 'qt') {
-			if ($value > $this->_qt_max) {
-				echo "qt is too high </br>\n";
-				return False;
-			}
-		}
+			case 't':
+				if ($value == 'event') {
+					$this->add_mandatory_parameter('ec');
+					$this->add_mandatory_parameter('ea');
+				}
+				if ($value == 'screenview')
+					$this->add_mandatory_parameter('sn');
+				break;
+
+			case 'qt':
+				if ($value > $this->_qt_max) {
+					echo "qt is too high </br>\n";
+					return False;
+				}
+				break;
 
 //We assume that wci means wui in the spec
-		if ($field == 'wui') {
-			$userList = new UserList;
-			if (!in_array($value, $userList->get_userlist())) {
-				echo "User unknown </br>\n";
-				return False;
-			}
+			case 'wui':
+				$userList = new UserList;
+				if (!in_array($value, $userList->get_userlist())) {
+					echo "User unknown </br>\n";
+					return False;
+				}
+				break;
 		}
-
 		return True;
 	}
 }
