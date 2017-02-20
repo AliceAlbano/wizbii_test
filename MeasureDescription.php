@@ -1,11 +1,14 @@
 <?php
 
+require 'Parameters.php';
+
 class MeasureDescription
 {
 	//XXX: How can we know if it is a mobile hit ?
 	//We don't implement these paramaters for now.
 	private $_mandatory = array('t', 'v', 'tid', 'ds');
 	private $_existing = array('t', 'v', 'tid', 'ds', 'ec', 'ea', 'sn');
+
 	private $_format = array(
 		't' => array('pageview', 'screenview', 'event'),
 		'v' => array(1),
@@ -15,18 +18,6 @@ class MeasureDescription
 		'ea' => array('client'),
 		'sn' => array('jobs'),
 		);
-
-	public function get_mandatory() {
-		return $this->_mandatory;
-	}
-
-	public function get_existing() {
-		return $this->_existing;
-	}
-
-	public function get_format() {
-		return $this->_format;
-	}
 
 	private function add_mandatory_parameter($parameter) {
 		array_push($this->_mandatory, $parameter);
@@ -55,6 +46,7 @@ class MeasureDescription
 
 	public function valid_parameters($given){
 		foreach ($given as $field => $value) {
+#			if (!$this->_format[$field]->check($value)) {
 			if (!in_array($value, $this->_format[$field])) {
 				echo "$value is not a valid format for $field. </br>\n";
 				return False;
