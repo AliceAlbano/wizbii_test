@@ -23,7 +23,7 @@ test_collect() {
 
 # Test non-conditionnal mandatory fields 
 
-test_collect 'All mandatory fields present' $RT_OK '[{"t":"event", "v":1, "tid":"UA-XXXX-Y", "ds":"apps", "ec":"bdo", "ea":"client", "wui":"r2d2"}]'
+test_collect 'All mandatory fields present' $RT_OK '[{"t":"event", "v":"1", "tid":"UA-XXXX-Y", "ds":"apps", "ec":"bdo", "ea":"client", "wui":"r2d2"}]'
 
 # Test non-conditionnal mandatory fields 
 
