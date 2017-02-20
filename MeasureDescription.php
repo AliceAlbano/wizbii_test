@@ -86,6 +86,7 @@ class MeasureDescription
 			}
 		}
 
+//We assume that wci means wui in the spec
 		if ($field == 'wui') {
 			$userList = new UserList;
 			if (!in_array($value, $userList->get_userlist())) {
