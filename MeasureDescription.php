@@ -28,6 +28,16 @@ class MeasureDescription
 		array_push($this->_mandatory, $parameter);
 	}
 
+//Change mandatory parameters according to t value
+	private function conditional_hit_type($value) {
+		if ($value == 'event') {
+			$this->add_mandatory_parameter('ec');
+			$this->add_mandatory_parameter('ea');
+		}
+		if ($value == 'screenview')
+			$this->add_mandatory_parameter('sn');
+	}
+
 	public function mandatory_parameters($given){
 		foreach ($this->_mandatory as $field) {
 			if (!array_key_exists($field, $given)) {
@@ -57,15 +67,8 @@ class MeasureDescription
 				return False;
 			}
 
-			//Conditional paramaters according to t value (hit type)
-			if ($field == 't') {
-				if ($value == 'event') {
-					$this->add_mandatory_parameter('ec');
-					$this->add_mandatory_parameter('ea');
-				}
-				if ($value == 'screenview')
-					$this->add_mandatory_parameter('sn');
-			}
+			if ($field == 't')
+				$this->conditional_hit_type($value);
 
 			if ($field == 'qt') {
 				if ($value > $this->_qt_max) {
