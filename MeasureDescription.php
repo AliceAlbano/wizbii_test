@@ -1,5 +1,7 @@
 <?php
 
+require 'UserList.php';
+
 class MeasureDescription
 {
 	//XXX: How can we know if it is a mobile hit ?
@@ -67,6 +69,7 @@ class MeasureDescription
 
 //Handles condition on specific parameters
 	private function conditional_hit_type($field, $value) {
+
 		if ($field == 't') {
 			if ($value == 'event') {
 				$this->add_mandatory_parameter('ec');
@@ -74,15 +77,23 @@ class MeasureDescription
 			}
 			if ($value == 'screenview')
 				$this->add_mandatory_parameter('sn');
-			return True;
 		}
+
 		if ($field == 'qt') {
 			if ($value > $this->_qt_max) {
 				echo "qt is too high </br>\n";
 				return False;
 			}
 		}
+
+		if ($field == 'wui') {
+			$userList = new UserList;
+			if (!in_array($value, $userList->get_userlist())) {
+				echo "User unknown </br>\n";
+				return False;
+			}
+		}
+
 		return True;
 	}
-
 }
